@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ListingCard from "./ListingCard";
+import Form from "./Form";
 
 function ListingsContainer({search}) {
 
@@ -17,6 +18,11 @@ function ListingsContainer({search}) {
     const updatedListings = listings.filter((listing) => listing.id !== deletedListing.id);
     setListings(updatedListings);
 
+  }
+
+  function handleAddNewListing (newListing){
+    const updatedListingList = [...listings, newListing]
+    setListings(updatedListingList)
   }
 
   const listingCards = 
@@ -37,12 +43,17 @@ function ListingsContainer({search}) {
     <main>
       <button onClick={() => setSortBy("id")}>Sort by Default</button>
       <button onClick={() => setSortBy("location")}>Sort By Location</button>
+      <div>
+        <h5>Submit New Listing</h5>
+        <Form onAddNewListing={handleAddNewListing} />
+      </div>
       <ul className="cards">
         {listingCards.map((listing) => (
         <ListingCard key={listing.id} listing={listing} onDelete={handleDelete}/>
         ))}
         
       </ul>
+      
     </main>
   );
 }
